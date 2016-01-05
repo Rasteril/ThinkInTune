@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls,
 
-  CoreUnit, SheetUnit, KeyboardMapperUnit, MidiUtilitiesUnit, GraphicsManagerUnit;
+  CoreUnit, ComponentUnit, KeyboardMapperUnit, MidiUtilitiesUnit, GraphicsManagerUnit;
 
 type
   TForm1 = class(TForm)
@@ -44,7 +44,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   DoubleBuffered := true;
   InitMIDI;
-  SetInstrument(93);
+  SetInstrument(87);
 
   key_down := false; // At this time, only one key at a time can be pressed
 
