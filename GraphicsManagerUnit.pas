@@ -24,25 +24,23 @@ end;
 
 procedure TGraphicsManager.updateCanvasWidth();
 var
-  i, last_note_x: integer;
+  last_note_x, last_note_length: integer;
 begin
+
+
+  last_note_x := Sheet.NoteSequence.getNoteX(Sheet.NoteSequence.length);
+  last_note_length := Sheet.NoteSequence.getLastNote().length;
+
+  if (last_note_x + last_note_length * NOTE_DRAW_LENGTH) > Form1.Image1.width then
+  begin
+    Form1.Image1.width := last_note_x + last_note_length * NOTE_DRAW_LENGTH + 20;
+  end;
+
   // ATTENTION when using this piece of code, hurt can be done
   Form1.Image1.Picture.Bitmap.Width := Form1.Image1.Width;
-
-  last_note_x := 0;
-
-  if length(Sheet.NoteSequence.sequence) > 0 then
-  begin
-    for i := 1 to Indicator.position do
-    begin
-      inc(last_note_x, Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH);
-    end;
-
-    if (last_note_x + Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH) > Form1.Image1.width then
-    begin
-      Form1.Image1.width := last_note_x + Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH + 20;
-    end;
-  end;
+  
+  // scroll to view the new notes
+  Form1.HorzScrollBar.Position := Form1.HorzScrollBar.Range;
 
 end;
 

@@ -2,7 +2,7 @@ unit KeyboardMapperUnit;
 
 interface
 
-uses Core;
+uses CoreUnit;
 
 type
   TKey = set of 1 .. 255;

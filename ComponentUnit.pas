@@ -1,4 +1,4 @@
-unit SheetUnit;
+unit ComponentUnit;
 
 interface
 

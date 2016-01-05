@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls,
 
-  CoreUnit, SheetUnit, GridUnit, IndicatorUnit, KeyboardMapperUnit, MidiUtilitiesUnit, NoteSequenceUnit, GraphicsManagerUnit;
+  CoreUnit, SheetUnit, KeyboardMapperUnit, MidiUtilitiesUnit, GraphicsManagerUnit;
 
 type
   TForm1 = class(TForm)
@@ -30,7 +30,6 @@ type
 var
   Form1: TForm1;
   KeyboardMapper: TKeyboardMapper;
-  Indicator: TIndicator;
   Sheet: TSheet;
   GraphicsManager: TGraphicsManager;
   old_form_height, old_form_width: integer;
@@ -56,8 +55,9 @@ begin
   old_form_height := self.Height;
 
   KeyboardMapper := TKeyboardMapper.create();
-  Indicator := TIndicator.create();
+
   Sheet := TSheet.create();
+
   GraphicsManager := TGraphicsManager.create();
 
   Sheet.adjustHeight();
@@ -83,6 +83,18 @@ begin
       KeyboardMapper.setOctave(KeyboardMapper.octave + 1);
     end
 
+    else if Key = VK_LEFT then
+    begin
+      Sheet.Indicator.decrement(1);
+      Sheet.draw();
+    end
+
+    else if Key = VK_RIGHT then
+    begin
+      Sheet.Indicator.increment(1);
+      Sheet.draw();
+    end
+
     else if Key in KeyboardMapper.set_length_keys then
     begin
 
@@ -96,9 +108,11 @@ begin
         self.last_pressed_key := Key;
 
         NoteOn(KeyboardMapper.getNote(Key), INTENSITY);
-        Timer1.Interval := 100;
-        Timer1.Enabled := True;
-        //sleep(100 * Sheet.NoteSequence.next_note_length);
+        Sheet.addNote(KeyboardMapper.getNote(self.last_pressed_key));
+        //Timer1.Interval := 100;
+        //Timer1.Enabled := True;
+        sleep(100);
+        NoteOff(KeyboardMapper.getNote(Key), INTENSITY);
 
       end;
     end;
@@ -150,7 +164,7 @@ begin
   except
     on E: Exception do
     begin
-      // warn through a status message
+      // TODO: warn through a status message
     end;
   end;
 
@@ -168,6 +182,7 @@ begin
   Sheet.addNote(KeyboardMapper.getNote(self.last_pressed_key));
 
   Timer1.Enabled := False;
+
 end;
 
 procedure TForm1.FormKeyUp(Sender: TObject; var Key: Word;

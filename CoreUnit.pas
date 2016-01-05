@@ -2,6 +2,11 @@ unit CoreUnit;
 
 interface
 
+type
+  TNote = record
+    length, height, vert_position, horiz_position, x: integer;
+  end;
+
 const
 
   INTENSITY = 127;
