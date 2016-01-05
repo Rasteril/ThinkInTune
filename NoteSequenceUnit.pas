@@ -3,7 +3,7 @@ unit NoteSequenceUnit;
 interface
 
 uses SysUtils, Windows, Dialogs,
-     Core;
+     CoreUnit;
 
 type
   TNote = record
@@ -70,8 +70,8 @@ begin
     begin
       x := draw_cursor;
       y := image1.Height - sequence[i].position * note_draw_size;
-      image1.canvas.rectangle(x, y, x + sequence[i].length, y + note_draw_size);
-      inc(draw_cursor, sequence[i].length);
+      image1.canvas.rectangle(x, y, x + sequence[i].length * NOTE_DRAW_LENGTH, y + note_draw_size);
+      inc(draw_cursor, sequence[i].length * NOTE_DRAW_LENGTH);
     end;
   end;
 

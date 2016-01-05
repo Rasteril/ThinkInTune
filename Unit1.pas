@@ -52,7 +52,7 @@ begin
   Sheet := TSheet.create();
   GraphicsManager := TGraphicsManager.create();
 
-  Sheet.adjustSize();
+  Sheet.adjustHeight();
 
 
 end;
@@ -79,7 +79,7 @@ begin
       sleep(100);
       NoteOff(KeyboardMapper.getNote(Key), INTENSITY);
 
-      Sheet.addNote(50, KeyboardMapper.getNote(Key));
+      Sheet.addNote(1, KeyboardMapper.getNote(Key));
     end;
   end;
 end;
@@ -116,6 +116,7 @@ begin
     old_form_width := self.Width;
     old_form_height := self.Height;
   end;
+
 end;
 
 end.

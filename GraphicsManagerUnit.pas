@@ -2,7 +2,7 @@ unit GraphicsManagerUnit;
 
 interface
 
-uses Graphics;
+uses Graphics, Dialogs;
 
 type
   TGraphicsManager = class
@@ -24,7 +24,6 @@ procedure TGraphicsManager.updateCanvasWidth();
 var
   i, last_note_x: integer;
 begin
-
   // ATTENTION when using this piece of code, hurt can be done
   Form1.Image1.Picture.Bitmap.Width := Form1.Image1.Width;
 
@@ -32,12 +31,13 @@ begin
 
   if length(Sheet.NoteSequence.sequence) > 0 then
   begin
+    showmessage(inttostr(Indicator.position));
     for i := 1 to Indicator.position do
     begin
       inc(last_note_x, Sheet.NoteSequence.sequence[i].length);
     end;
 
-    if last_note_x + Sheet.NoteSequence.note_draw_size > Form1.Image1.width then
+    if last_note_x + Sheet.NoteSequence.note_draw_height > Form1.Image1.width then
     begin
       Form1.Image1.width := last_note_x + 20;
     end;

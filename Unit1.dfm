@@ -19,7 +19,7 @@ object Form1: TForm1
   object Image1: TImage
     Left = 8
     Top = 8
-    Width = 369
+    Width = 137
     Height = 561
   end
 end

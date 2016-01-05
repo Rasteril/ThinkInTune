@@ -38,6 +38,8 @@ const
     MAX_NOTE_LENGTH = 9;
     MIN_NOTE_LENGTH = 1;
 
+    NOTE_DRAW_LENGTH = 20;
+
 implementation
 
 end.

@@ -14,7 +14,7 @@ type
     constructor create();
     procedure draw();
     procedure updateSize();
-    procedure adjustSize();
+    procedure adjustHeight();
     procedure addNote(length, height: integer);
   end;
 
@@ -35,7 +35,7 @@ end;
 
 procedure TSheet.draw();
 begin
-  self.Grid.draw(self.NoteSequence.note_draw_size);
+  self.Grid.draw(self.NoteSequence.note_draw_height);
   self.NoteSequence.draw();
 end;
 
@@ -56,19 +56,19 @@ begin
   // If vertical scale
   if self.old_height <> Form1.Image1.height then
   begin
-    self.adjustSize();
+    self.adjustHeight();
   end;
 end;
 
-procedure TSheet.adjustSize();
+procedure TSheet.adjustHeight();
 var
   image_height: integer;
 begin
-  self.NoteSequence.note_draw_size := Form1.Image1.height div (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT + 1);
+  self.NoteSequence.note_draw_height := Form1.Image1.height div (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT + 1);
 
   image_height := Form1.Image1.height;
 
-  while (image_height div self.NoteSequence.note_draw_size) <> (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT) do
+  while (image_height div self.NoteSequence.note_draw_height) <> (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT) do
   begin
     dec(image_height);
   end;
