@@ -12,8 +12,9 @@ type
 
   TNoteSequence = class
     sequence: array [1 .. 1000] of TNote;
-    note_draw_size: integer;
-    procedure addNote(length, height: integer);
+    note_draw_height: integer;
+    next_note_length: integer;
+    procedure addNote(height: integer);
     procedure draw();
     constructor create();
   end;
@@ -24,22 +25,23 @@ uses Unit1;
 
 constructor TNoteSequence.create();
 begin
-  note_draw_size := Form1.Image1.height div (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT + 1);
+  note_draw_height := Form1.Image1.height div (MAX_NOTE_HEIGHT - MIN_NOTE_HEIGHT + 1);
+  next_note_length := 1;
 end;
 
-procedure TNoteSequence.addNote(length, height: integer);
+procedure TNoteSequence.addNote(height: integer);
 var
   last_note_x: integer;
   i: integer;
 begin
 
-  if length < MIN_NOTE_LENGTH then length := MIN_NOTE_LENGTH
+  if next_note_length < MIN_NOTE_LENGTH then length := MIN_NOTE_LENGTH
   else if length > MAX_NOTE_LENGTH then length := MAX_NOTE_LENGTH;
 
   if height < MIN_NOTE_HEIGHT then height := MIN_NOTE_HEIGHT
   else if height > MAX_NOTE_HEIGHT then height := MAX_NOTE_HEIGHT;
 
-  sequence[Indicator.position].length := length;
+  sequence[Indicator.position].length := next_note_length;
   sequence[Indicator.position].height := height;
   sequence[Indicator.position].position := height - MIN_NOTE_HEIGHT + 1;
   Indicator.increment(1);
@@ -69,8 +71,8 @@ begin
     with Form1 do
     begin
       x := draw_cursor;
-      y := image1.Height - sequence[i].position * note_draw_size;
-      image1.canvas.rectangle(x, y, x + sequence[i].length * NOTE_DRAW_LENGTH, y + note_draw_size);
+      y := image1.Height - sequence[i].position * note_draw_height;
+      image1.canvas.rectangle(x, y, x + sequence[i].length * NOTE_DRAW_LENGTH, y + note_draw_height);
       inc(draw_cursor, sequence[i].length * NOTE_DRAW_LENGTH);
     end;
   end;

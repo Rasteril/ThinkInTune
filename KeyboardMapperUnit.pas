@@ -5,12 +5,15 @@ interface
 uses Core;
 
 type
-  TPlayableKey = set of 1 .. 255;
+  TKey = set of 1 .. 255;
+  TKeyboardNumber = set of 1 .. 9;
   
   TKeyboardMapper = class
     map: array [0 .. 11] of integer;
     octave: integer;
-    playable_keys: TPlayableKey;
+    playable_keys: TKey;
+    set_length_keys: TKey;
+    set_length_numbers: TKeyboardNumber;
     function getNote(key: Word): integer;
     function getKey(note: integer): integer;
     procedure setOctave(value: integer);
@@ -28,16 +31,18 @@ constructor TKeyboardMapper.create();
 var
   i: integer;
 begin
-  playable_keys := [65, 87, 83, 69, 68, 70, 84, 71, 89, 72, 85, 74];
+  self.playable_keys := [65, 87, 83, 69, 68, 70, 84, 71, 89, 72, 85, 74];
+  self.set_length_keys := [48 .. 57];
+  self.set_length_numbers := [1 .. 9];
 
   // TODO set or const array, one or the other, change that!
 
   for i := 0 to 11 do
   begin
-   map[i] := KEYBOARD_MAP[i];
+   self.map[i] := KEYBOARD_MAP[i];
   end;
 
-  octave := 5;
+  self.octave := 5;
 
 end;
 
@@ -47,7 +52,7 @@ var
 begin
   for i := 0 to 11 do
   begin
-    if map[i] = Key then result := i + (octave - 1) * 12;
+    if self.map[i] = Key then result := i + (self.octave - 1) * 12;
   end;
 end;
 

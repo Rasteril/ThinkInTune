@@ -13,13 +13,21 @@ object Form1: TForm1
   OldCreateOrder = False
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnKeyUp = FormKeyUp
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
     Left = 8
     Top = 8
-    Width = 137
+    Width = 777
     Height = 561
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 24
+    Top = 24
   end
 end

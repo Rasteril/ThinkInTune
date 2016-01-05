@@ -38,9 +38,9 @@ begin
       inc(last_note_x, Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH);
     end;
 
-    if last_note_x + Sheet.NoteSequence.note_draw_height > Form1.Image1.width then
+    if (last_note_x + Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH) > Form1.Image1.width then
     begin
-      Form1.Image1.width := last_note_x + 20;
+      Form1.Image1.width := last_note_x + Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH + 20;
     end;
   end;
 
@@ -57,7 +57,7 @@ begin
   end;
 end;
 
-procedure TGraphicsManager.line(x1, y1, x2, y2: integer, color: TColor);
+procedure TGraphicsManager.line(x1, y1, x2, y2: integer; color: TColor);
 begin
   with Form1.Image1.Canvas do
   begin
