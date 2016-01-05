@@ -2,13 +2,15 @@ unit GraphicsManagerUnit;
 
 interface
 
-uses Graphics, Dialogs;
+uses Graphics, Dialogs, SysUtils,
+     CoreUnit;
 
 type
   TGraphicsManager = class
     constructor create();
     procedure updateCanvasWidth();
     procedure rectangle(x1, y1, x2, y2: integer; color: TColor);
+    procedure line(x1, y1, x2, y2: integer; color: TColor);
   end;
 
 implementation
@@ -31,10 +33,9 @@ begin
 
   if length(Sheet.NoteSequence.sequence) > 0 then
   begin
-    showmessage(inttostr(Indicator.position));
     for i := 1 to Indicator.position do
     begin
-      inc(last_note_x, Sheet.NoteSequence.sequence[i].length);
+      inc(last_note_x, Sheet.NoteSequence.sequence[i].length * NOTE_DRAW_LENGTH);
     end;
 
     if last_note_x + Sheet.NoteSequence.note_draw_height > Form1.Image1.width then
@@ -47,12 +48,23 @@ end;
 
 procedure TGraphicsManager.rectangle(x1, y1, x2, y2: integer; color: TColor);
 begin
-  Form1.Image1.Canvas.brush.Color := color;
-  Form1.Image1.Canvas.pen.color := color;
-  Form1.Image1.Canvas.Rectangle(x1, y1, x2, y2);
+  with Form1.Image1.Canvas do
+  begin
+    brush.Color := color;
+    pen.color := color;
+    Rectangle(x1, y1, x2, y2);
+    brush.Color := clGreen;
+  end;
+end;
 
-  Form1.Image1.Canvas.brush.Color := clGreen;
-
+procedure TGraphicsManager.line(x1, y1, x2, y2: integer, color: TColor);
+begin
+  with Form1.Image1.Canvas do
+  begin
+    pen.color := color;
+    MoveTo(x1, y1);
+    Lineto(x2, y2);
+  end;
 end;
 
 end.
