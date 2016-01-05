@@ -2,7 +2,7 @@ unit GridUnit;
 
 interface
 
-uses Windows, SysUtils, Dialogs,
+uses Windows, SysUtils, Dialogs, Math,
      CoreUnit;
 
 type
@@ -47,7 +47,7 @@ begin
 
   //horizontal grid (bars)
   cell_width := 4 * NOTE_DRAW_LENGTH;
-  bar_count := Form1.Image1.width div cell_width;
+  bar_count := ceil(Form1.Image1.width / cell_width);
 
   for j := 0 to bar_count - 1 do
   begin
